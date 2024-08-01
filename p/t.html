@@ -62,18 +62,40 @@
         .modal-buttons .no:hover {
             background-color: #bbb;
         }
+        .modal .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .fullscreen-image {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 99999998; /* Ensure image is behind modal but above the body */
+        }
     </style>
 </head>
 <body>
     <img src="../i/Troll/hehe_boy.jpg">
 
     <div class="modal" id="myModal">
+        <button class="fullscreen-btn" onclick="toggleFullScreen()">X</button>
         <h2>Apakah Anda mau keluar?</h2>
         <div class="modal-buttons">
             <button class="no" onclick="handleNo()">Tidak</button>
             <button class="yes" onclick="handleYes()">Ya</button>
         </div>
     </div>
+
+    <img id="fullscreenImage" class="fullscreen-image" src="../i/Troll/kodok.gif">
 
     <script>
         // Function to show the modal
@@ -88,6 +110,23 @@
 
         function handleNo() {
             window.open('https://www.nopiyar.my.id', 'MsgWindow', 'width=400,height=500');
+        }
+
+        // Function to toggle full screen
+        function toggleFullScreen() {
+            const modal = document.getElementById('myModal');
+            const fullscreenImage = document.getElementById('fullscreenImage');
+            
+            if (!document.fullscreenElement) {
+                fullscreenImage.style.display = 'block'; // Show image in full screen
+                fullscreenImage.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    fullscreenImage.style.display = 'none'; // Hide image when exiting full screen
+                });
+            }
         }
 
         // Show the modal after 3 seconds
@@ -107,7 +146,6 @@
             // Chrome requires returnValue to be set
             e.returnValue = '';
         });
-
     </script>
 </body>
 </html>
