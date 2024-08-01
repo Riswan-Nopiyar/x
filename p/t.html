@@ -1,6 +1,113 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Example</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        img {
+            z-index: 99999998;
+            border: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 99999999; /* Ensure modal is above the image */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+        }
+        .modal h2 {
+            margin-top: 0;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .modal-buttons .yes {
+            background-color: #007BFF;
+            color: white;
+        }
+        .modal-buttons .no {
+            background-color: #ddd;
+            color: black;
+        }
+        .modal-buttons .yes:hover {
+            background-color: #0056b3;
+        }
+        .modal-buttons .no:hover {
+            background-color: #bbb;
+        }
+    </style>
+</head>
 <body>
-<img src="../i/Troll/hehe_boy.jpg" 
-     style="z-index: 99999999; border: none; position: fixed; top: 0; left: 0; height: 100vh; width: 100%;">
-     </body>
+    <img src="../i/Troll/hehe_boy.jpg">
+
+    <div class="modal" id="myModal">
+        <h2>Apakah Anda mau keluar?</h2>
+        <div class="modal-buttons">
+            <button class="no" onclick="handleNo()">Tidak</button>
+            <button class="yes" onclick="handleYes()">Ya</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show the modal
+        function showModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        // Functions to handle button clicks
+        function handleYes() {
+            window.open('https://www.nopiyar.com', 'MsgWindow', 'width=400,height=500');
+        }
+
+        function handleNo() {
+            window.open('https://www.nopiyar.my.id', 'MsgWindow', 'width=400,height=500');
+        }
+
+        // Show the modal after 3 seconds
+        setTimeout(showModal, 3000);
+
+        // Show the modal on back button press or close tab/window
+        window.onbeforeunload = function(e) {
+            showModal();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+        };
+
+        // Prevent form submission
+        window.addEventListener('beforeunload', function (e) {
+            // Prevent the default behavior
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = '';
+        });
+
+    </script>
+</body>
 </html>
